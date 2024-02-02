@@ -13,6 +13,7 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     debugPrint('FavoritesPage build()');
 
     if (favProducts.isEmpty) {
@@ -52,7 +53,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         fontWeight: FontWeight.normal,
                       ),
                 ),
-                trailing: IconButton(
+                trailing: orientation == Orientation.portrait ? IconButton(
                   onPressed: () {
                     setState(() {
                       favProducts.remove(favProducts[index]);
@@ -60,6 +61,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   },
                   icon: const Icon(Icons.favorite),
                   color: Theme.of(context).primaryColor,
+                ) : TextButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      favProducts.remove(favProducts[index]);
+                    });
+                  },
+                  icon: const Icon(Icons.favorite),
+                  label: const Text('Favorite'),
                 ),
               ),
             ),

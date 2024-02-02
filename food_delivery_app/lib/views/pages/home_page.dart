@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/models/category.dart';
 import 'package:food_delivery_app/models/product.dart';
 import 'package:food_delivery_app/utils/app_routes.dart';
-import 'package:food_delivery_app/views/pages/product_details_page.dart';
 import 'package:food_delivery_app/views/widgets/product_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() {
+    return _HomePageState();
+  }
 }
 
 class _HomePageState extends State<HomePage> {
@@ -20,10 +21,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     filteredProducts = dummyProducts;
+    debugPrint('HomePage initState()');
   }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('HomePage build()');
+    final orientation = MediaQuery.of(context).orientation;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       child: SingleChildScrollView(
@@ -110,18 +114,20 @@ class _HomePageState extends State<HomePage> {
                 itemCount: filteredProducts.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: orientation == Orientation.portrait ? 2 : 5,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                 ),
                 itemBuilder: (_, index) {
                   final dummyProduct = filteredProducts[index];
                   return InkWell(
-                    onTap: () => Navigator.of(context).pushNamed(
-                      AppRoutes.productDetails,
-                      arguments: dummyProduct,
-                    ).then((value) => setState(() {})),
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(
+                          AppRoutes.productDetails,
+                          arguments: dummyProduct,
+                        )
+                        .then((value) => setState(() {})),
                     child: ProductItem(product: dummyProduct),
                   );
                 },
