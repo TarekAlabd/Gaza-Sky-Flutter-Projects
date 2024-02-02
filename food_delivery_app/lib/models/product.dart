@@ -19,6 +19,8 @@ class Product {
   });
 }
 
+List<Product> favProducts = [];
+
 List<Product> dummyProducts = [
   Product(
       id: '1',

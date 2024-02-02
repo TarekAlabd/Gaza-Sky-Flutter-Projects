@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/models/product.dart';
 import 'package:food_delivery_app/utils/app_colors.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductItem extends StatefulWidget {
   final Product product;
   const ProductItem({
     super.key,
     required this.product,
   });
 
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,22 +26,22 @@ class ProductItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Image.network(
-                    product.imgUrl,
+                    widget.product.imgUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Text(
-                  product.name,
+                  widget.product.name,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
-                  product.category.title,
+                  widget.product.category.title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  '\$${product.price}',
+                  '\$${widget.product.price}',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
@@ -49,7 +54,15 @@ class ProductItem extends StatelessWidget {
             top: 4,
             right: 4,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  if (favProducts.contains(widget.product)) {
+                    favProducts.remove(widget.product);
+                  } else {
+                    favProducts.add(widget.product);
+                  }
+                });
+              },
               child: DecoratedBox(
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
@@ -58,7 +71,7 @@ class ProductItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(
-                    Icons.favorite_border,
+                    favProducts.contains(widget.product) ? Icons.favorite : Icons.favorite_border,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),

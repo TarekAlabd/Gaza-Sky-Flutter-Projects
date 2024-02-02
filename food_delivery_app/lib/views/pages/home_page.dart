@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/models/category.dart';
 import 'package:food_delivery_app/models/product.dart';
+import 'package:food_delivery_app/utils/app_routes.dart';
 import 'package:food_delivery_app/views/pages/product_details_page.dart';
 import 'package:food_delivery_app/views/widgets/product_item.dart';
 
@@ -117,12 +118,10 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (_, index) {
                   final dummyProduct = filteredProducts[index];
                   return InkWell(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            ProductDetailsPage(product: dummyProduct),
-                      ),
-                    ),
+                    onTap: () => Navigator.of(context).pushNamed(
+                      AppRoutes.productDetails,
+                      arguments: dummyProduct,
+                    ).then((value) => setState(() {})),
                     child: ProductItem(product: dummyProduct),
                   );
                 },
