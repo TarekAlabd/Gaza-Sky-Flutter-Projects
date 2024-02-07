@@ -3,6 +3,7 @@ enum ProductSize {
   M,
   L,
   XL,
+  XXL,
 }
 
 class ProductItemModel {
