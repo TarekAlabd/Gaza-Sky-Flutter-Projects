@@ -4,7 +4,8 @@ import 'package:ecommerce_app/models/announcement_model.dart';
 import 'package:flutter/material.dart';
 
 class CustomCarouselIndicator extends StatefulWidget {
-  const CustomCarouselIndicator({super.key});
+  final List<AnnouncementModel> announcements;
+  const CustomCarouselIndicator({super.key, required this.announcements,});
 
   @override
   State<CustomCarouselIndicator> createState() =>
@@ -21,7 +22,7 @@ class _CustomCarouselIndicatorState extends State<CustomCarouselIndicator> {
     _controller = CarouselController();
   }
 
-  final List<Widget> imageSliders = dummyAnnouncements
+  List<Widget> imageSliders() => widget.announcements
       .map((item) => Container(
             margin: const EdgeInsets.all(5.0),
             child: ClipRRect(
@@ -40,7 +41,7 @@ class _CustomCarouselIndicatorState extends State<CustomCarouselIndicator> {
     return Column(
       children: [
         CarouselSlider(
-          items: imageSliders,
+          items: imageSliders(),
           carouselController: _controller,
           options: CarouselOptions(
               autoPlay: true,
