@@ -13,14 +13,12 @@ class ProductItemModel {
   final String description;
   final double price;
   final String category;
-  final ProductSize? size;
   final double averageRate;
 
   ProductItemModel({
     required this.id,
     required this.name,
     required this.imgUrl,
-    this.size,
     this.description =
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     required this.price,
@@ -47,7 +45,6 @@ class ProductItemModel {
       price: price ?? this.price,
       category: category ?? this.category,
       averageRate: averageRate ?? this.averageRate,
-      size: size ?? this.size,
     );
   }
 }

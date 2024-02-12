@@ -110,6 +110,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         screens: _buildScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,
+        stateManagement: false,
         resizeToAvoidBottomInset:
             true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
         hideNavigationBarWhenKeyboardShows:
