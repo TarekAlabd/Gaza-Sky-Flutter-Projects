@@ -10,7 +10,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductSize? size;
   int counter = 0;
 
-  void getProductDetails(String productId) async {
+  Future<void> getProductDetails(String productId) async {
     emit(ProductDetailsLoading());
     try {
       final product =
