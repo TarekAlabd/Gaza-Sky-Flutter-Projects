@@ -1,3 +1,6 @@
+import 'package:ecommerce_app/models/product_item_model.dart';
+import 'package:ecommerce_app/services/firestore_services.dart';
+import 'package:ecommerce_app/utils/api_paths.dart';
 import 'package:ecommerce_app/utils/app_assets.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/views/pages/cart_page.dart';

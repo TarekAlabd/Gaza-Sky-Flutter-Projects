@@ -4,6 +4,7 @@ abstract class AuthServices {
   Future<bool> signInWithEmailAndPassword(String email, String password);
   Future<bool> signUpWithEmailAndPassword(String email, String password);
   Future<void> signOut();
+  Future<User?> currentUser();
 }
 
 class AuthServicesImpl implements AuthServices {
@@ -39,5 +40,10 @@ class AuthServicesImpl implements AuthServices {
       return true;
     }
     return false;
+  }
+  
+  @override
+  Future<User?> currentUser() {
+    return Future.value(firebaseAuth.currentUser);
   }
 }
