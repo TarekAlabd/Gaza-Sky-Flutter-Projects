@@ -1,11 +1,8 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/utils/route/app_routes.dart';
 import 'package:ecommerce_app/view_models/auth_cubit/auth_cubit.dart';
-import 'package:ecommerce_app/view_models/product_details_cubit/product_details_cubit.dart';
 import 'package:ecommerce_app/views/widgets/main_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginForm extends StatefulWidget {
@@ -20,12 +17,24 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isVisible = false;
+  bool isLogin = true;
 
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       debugPrint('Email: ${_emailController.text}');
       debugPrint('Password: ${_passwordController.text}');
       await BlocProvider.of<AuthCubit>(context).signInWithEmailAndPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
+    }
+  }
+
+  Future<void> register() async {
+    if (_formKey.currentState!.validate()) {
+      debugPrint('Email: ${_emailController.text}');
+      debugPrint('Password: ${_passwordController.text}');
+      await BlocProvider.of<AuthCubit>(context).signUpWithEmailAndPassword(
         _emailController.text,
         _passwordController.text,
       );
@@ -116,13 +125,14 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              onPressed: () {},
-              child: const Text('Forgot Password?'),
+          if (isLogin)
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                onPressed: () {},
+                child: const Text('Forgot Password?'),
+              ),
             ),
-          ),
           const SizedBox(height: 36),
           BlocConsumer<AuthCubit, AuthState>(
             bloc: cubit,
@@ -153,7 +163,8 @@ class _LoginFormState extends State<LoginForm> {
             buildWhen: (previous, current) =>
                 current is AuthLoading ||
                 current is AuthFailure ||
-                current is AuthSuccess,
+                current is AuthSuccess ||
+                current is AuthInitial,
             builder: (context, state) {
               if (state is AuthLoading) {
                 return const MainButton(
@@ -161,10 +172,22 @@ class _LoginFormState extends State<LoginForm> {
                 );
               }
               return MainButton(
-                onPressed: login,
-                title: 'Login',
+                onPressed: isLogin ? login : register,
+                title: isLogin ? 'Login' : 'Register',
               );
             },
+          ),
+          const SizedBox(height: 16),
+          Align(
+            alignment: Alignment.center,
+            child: TextButton(
+              child: Text(isLogin
+                  ? 'Don\'t have an account? Register'
+                  : 'Already have an account? Login'),
+              onPressed: () => setState(() {
+                isLogin = !isLogin;
+              }),
+            ),
           ),
           const SizedBox(height: 16),
           Align(

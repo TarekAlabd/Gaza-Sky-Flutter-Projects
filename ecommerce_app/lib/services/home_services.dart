@@ -6,7 +6,7 @@ abstract class HomeServices {
   Future<List<ProductItemModel>> getProducts();
 }
 
-class HomeServicesImpl extends HomeServices {
+class HomeServicesImpl implements HomeServices {
   final firestoreService = FirestoreService.instance;
 
   @override

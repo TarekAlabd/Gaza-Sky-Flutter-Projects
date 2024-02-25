@@ -3,11 +3,13 @@ import 'package:ecommerce_app/services/firestore_services.dart';
 import 'package:ecommerce_app/utils/api_paths.dart';
 import 'package:ecommerce_app/utils/app_assets.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/view_models/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_app/views/pages/cart_page.dart';
 import 'package:ecommerce_app/views/pages/favorites_page.dart';
 import 'package:ecommerce_app/views/pages/home_page.dart';
 import 'package:ecommerce_app/views/pages/profle_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
@@ -27,11 +29,18 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   }
 
   List<Widget> _buildScreens() {
-    return const [
-      HomePage(),
-      FavoritesPage(),
-      CartPage(),
-      ProfilePage(),
+    return [
+      const HomePage(),
+      const FavoritesPage(),
+      BlocProvider(
+        create: (context) {
+          final cubit = CartCubit();
+          cubit.getCartItems();
+          return cubit;
+        },
+        child: const CartPage(),
+      ),
+      const ProfilePage(),
     ];
   }
 

@@ -1,13 +1,18 @@
+import 'package:ecommerce_app/models/cart_orders_model.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CounterWidget extends StatelessWidget {
   final dynamic cubit;
-  final int counter;
+  final int? counter;
+  final CartOrdersModel? cartOrder;
+  final bool isLoading;
   const CounterWidget({
     super.key,
-    required this.cubit,
-    required this.counter,
+    this.cubit,
+    this.counter,
+    this.cartOrder,
+    this.isLoading = false,
   });
 
   @override
@@ -17,10 +22,12 @@ class CounterWidget extends StatelessWidget {
         color: AppColors.grey2,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
+      child: isLoading ? const CircularProgressIndicator.adaptive() : Row(
         children: [
           IconButton(
-            onPressed: () async => await cubit.decrementCounter(),
+            onPressed: () async => cartOrder != null
+                ? await cubit.decrementCounter(cartOrder)
+                : await cubit.decrementCounter(),
             icon: const Icon(Icons.remove),
           ),
           const SizedBox(width: 8),
@@ -30,7 +37,9 @@ class CounterWidget extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           IconButton(
-            onPressed: () async => await cubit.incrementCounter(),
+            onPressed: () async => cartOrder != null
+                ? await cubit.incrementCounter(cartOrder)
+                : await cubit.incrementCounter(),
             icon: const Icon(Icons.add),
           ),
         ],

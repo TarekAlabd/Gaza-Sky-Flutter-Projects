@@ -18,14 +18,14 @@ class LoginPage extends StatelessWidget {
             children: [
               SizedBox(height: size.height * 0.05),
               Text(
-                'Login Account',
+                'Auth Page',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Please, login with registered account!',
+                'Please, login with registered account or register!',
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                       color: AppColors.grey,
                     ),
