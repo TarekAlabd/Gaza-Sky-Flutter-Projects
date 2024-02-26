@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/utils/route/app_routes.dart';
 import 'package:ecommerce_app/view_models/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_app/views/widgets/cart_item_widget.dart';
 import 'package:ecommerce_app/views/widgets/main_button.dart';
@@ -59,9 +60,9 @@ class CartPage extends StatelessWidget {
                     height: 50,
                     child: MainButton(
                       onPressed: () {
-                        //   Navigator.of(context, rootNavigator: true).pushNamed(
-                        //   AppRoutes.payment,
-                        // );
+                          Navigator.of(context, rootNavigator: true).pushNamed(
+                          AppRoutes.checkoutRoute,
+                        );
                       },
                       child: const Text('Checkout'),
                     ),
